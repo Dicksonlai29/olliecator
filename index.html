@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Enter the Olliecator and discover your campus otter personality."
+    />
+    <meta name="theme-color" content="#fffaf0" />
+    <title>Olliecator — What's your campus otter?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="background-shape background-shape--one"></div>
+    <div class="background-shape background-shape--two"></div>
+
+    <header class="site-header">
+      <button class="brand" type="button" data-action="home" aria-label="Return to Olliecator home">
+        Ollie<span>cator</span><i aria-hidden="true"></i>
+      </button>
+      <div class="privacy-pill">
+        <span aria-hidden="true">◉</span>
+        Nothing leaves your device
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1">
+      <section id="landing-view" class="view landing-view" aria-labelledby="landing-title">
+        <div class="hero-copy">
+          <p class="eyebrow">A totally serious campus personality quiz*</p>
+          <h1 id="landing-title">What kind of campus <span>otter</span> are you?</h1>
+          <p class="hero-lede">
+            Eighteen suspiciously specific situations. Eight student personalities.
+            One extremely qualified otter.
+          </p>
+          <div class="hero-actions">
+            <button class="button button--primary button--large" type="button" data-action="start">
+              Enter the Olliecator
+              <span aria-hidden="true">→</span>
+            </button>
+            <p>About 4 minutes · No sign-up · Mildly exposing</p>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Olliecator personality machine illustration">
+          <div class="machine-card">
+            <div class="machine-top">
+              <span>OLLIECATOR 3000</span>
+              <span class="machine-light"></span>
+            </div>
+            <div class="machine-screen">
+              <div class="otter-placeholder" aria-hidden="true">
+                <span class="ear ear--left"></span>
+                <span class="ear ear--right"></span>
+                <span class="eye eye--left"></span>
+                <span class="eye eye--right"></span>
+                <span class="nose"></span>
+                <span class="whisker whisker--one"></span>
+                <span class="whisker whisker--two"></span>
+              </div>
+              <p>Scanning academic survival instincts…</p>
+            </div>
+            <div class="machine-controls">
+              <span></span><span></span><span></span>
+              <div class="machine-slot">INSERT VIBES</div>
+            </div>
+          </div>
+          <div class="floating-sticker floating-sticker--chat">87</div>
+          <div class="floating-sticker floating-sticker--fire">🔥</div>
+          <div class="floating-sticker floating-sticker--calendar">17</div>
+        </div>
+
+        <p class="disclaimer">
+          *For entertainment and student engagement. Olliecator is not a psychological
+          or diagnostic assessment.
+        </p>
+      </section>
+
+      <section id="quiz-view" class="view quiz-view" aria-labelledby="question-title" hidden>
+        <div class="quiz-status">
+          <div class="progress-copy">
+            <span id="question-count">Question 1 of 18</span>
+            <span id="progress-percent">6%</span>
+          </div>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="Quiz progress"
+            aria-valuemin="1"
+            aria-valuemax="18"
+            aria-valuenow="1"
+          >
+            <span id="progress-fill"></span>
+          </div>
+        </div>
+
+        <article class="question-card">
+          <div class="question-heading">
+            <span id="question-number" class="question-number">01</span>
+            <div>
+              <p class="eyebrow">Campus situation unlocked</p>
+              <h2 id="question-title"></h2>
+            </div>
+          </div>
+          <p id="question-context" class="question-context"></p>
+
+          <div class="answer-poles" aria-hidden="true">
+            <article class="answer-pole answer-pole--a">
+              <span>A</span>
+              <p id="answer-a"></p>
+            </article>
+            <article class="answer-pole answer-pole--b">
+              <span>B</span>
+              <p id="answer-b"></p>
+            </article>
+          </div>
+
+          <fieldset class="scale-fieldset">
+            <legend>Which response feels more like you?</legend>
+            <div id="answer-scale" class="answer-scale"></div>
+          </fieldset>
+        </article>
+
+        <div class="quiz-navigation">
+          <button class="button button--ghost" type="button" data-action="back">← Back</button>
+          <button class="button button--primary" type="button" data-action="next" disabled>
+            Next question →
+          </button>
+        </div>
+      </section>
+
+      <section id="tie-view" class="view tie-view" aria-labelledby="tie-title" hidden>
+        <div class="tie-card">
+          <p class="eyebrow">Bonus plot twist</p>
+          <h2 id="tie-title">Your result is too balanced</h2>
+          <p id="tie-intro"></p>
+          <div class="tie-situation">
+            <h3 id="tie-question-title"></h3>
+            <p id="tie-context"></p>
+          </div>
+          <div class="tie-options">
+            <button type="button" class="tie-option tie-option--a" data-tie-value="1">
+              <span>A</span>
+              <span id="tie-a"></span>
+            </button>
+            <button type="button" class="tie-option tie-option--b" data-tie-value="-1">
+              <span>B</span>
+              <span id="tie-b"></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="calculating-view" class="view calculating-view" aria-live="polite" hidden>
+        <div class="scanner" aria-hidden="true">
+          <div class="scanner-face">?</div>
+          <span></span>
+        </div>
+        <p class="eyebrow">The Olliecator is processing</p>
+        <h2 id="calculating-message">Inspecting your group-chat contribution…</h2>
+      </section>
+
+      <section id="result-view" class="view result-view" aria-labelledby="result-name" hidden>
+        <div class="result-hero">
+          <div class="result-art-wrap">
+            <img id="result-art" src="" alt="" />
+            <span id="result-code-badge"></span>
+          </div>
+          <div class="result-intro">
+            <p class="eyebrow">The Olliecator has spoken</p>
+            <p class="result-code">Your campus type is <strong id="result-code"></strong></p>
+            <h1 id="result-name"></h1>
+            <p id="result-tagline" class="result-tagline"></p>
+            <div class="result-actions">
+              <button class="button button--primary" type="button" data-action="share">
+                Share my result
+              </button>
+              <button class="button button--secondary" type="button" data-action="download">
+                Download card
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-grid">
+          <article class="result-panel result-panel--wide">
+            <p class="eyebrow">Your campus operating system</p>
+            <p id="result-description" class="result-description"></p>
+          </article>
+
+          <article class="result-panel">
+            <p class="eyebrow">Your dimensions</p>
+            <div id="dimension-bars" class="dimension-bars"></div>
+          </article>
+
+          <article class="result-panel">
+            <p class="eyebrow">Known talents</p>
+            <ul id="result-strengths" class="trait-list trait-list--good"></ul>
+          </article>
+
+          <article class="result-panel">
+            <p class="eyebrow">Potential flop era</p>
+            <p id="result-flop"></p>
+          </article>
+
+          <article class="result-panel">
+            <p class="eyebrow">Group-project role</p>
+            <p id="result-role"></p>
+          </article>
+        </div>
+
+        <div class="result-footer-actions">
+          <button class="button button--ghost" type="button" data-action="restart">
+            ↻ Retake the Olliecator
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <canvas id="share-canvas" width="1080" height="1350" hidden></canvas>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
