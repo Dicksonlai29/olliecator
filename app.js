@@ -6,6 +6,7 @@
   const state = {
     current: 0,
     answers: new Array(data.questions.length).fill(null),
+    questionOrder: [],
     scores: { chat: 0, study: 0, plan: 0 },
     pendingTies: [],
     resultCode: "",
@@ -21,6 +22,37 @@
 
   const $ = (selector) => document.querySelector(selector);
 
+  function shuffle(items) {
+    const shuffled = [...items];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+    }
+    return shuffled;
+  }
+
+  function createQuestionOrder() {
+    const dimensions = shuffle(["chat", "study", "plan"]);
+    const buckets = Object.fromEntries(
+      dimensions.map((dimension) => [
+        dimension,
+        shuffle(data.questions.filter((question) => question.dimension === dimension)),
+      ])
+    );
+    const rounds = Math.max(...dimensions.map((dimension) => buckets[dimension].length));
+    const orderedQuestions = [];
+
+    for (let round = 0; round < rounds; round += 1) {
+      dimensions.forEach((dimension) => {
+        if (buckets[dimension][round]) {
+          orderedQuestions.push(buckets[dimension][round]);
+        }
+      });
+    }
+
+    return orderedQuestions;
+  }
+
   function showView(name) {
     Object.entries(views).forEach(([key, view]) => {
       view.hidden = key !== name;
@@ -31,7 +63,8 @@
 
   function startQuiz() {
     state.current = 0;
-    state.answers.fill(null);
+    state.questionOrder = createQuestionOrder();
+    state.answers = new Array(state.questionOrder.length).fill(null);
     state.scores = { chat: 0, study: 0, plan: 0 };
     state.pendingTies = [];
     state.resultCode = "";
@@ -40,11 +73,11 @@
   }
 
   function renderQuestion() {
-    const question = data.questions[state.current];
+    const question = state.questionOrder[state.current];
     const number = state.current + 1;
-    const percent = Math.round((number / data.questions.length) * 100);
+    const percent = Math.round((number / state.questionOrder.length) * 100);
 
-    $("#question-count").textContent = `Question ${number} of ${data.questions.length}`;
+    $("#question-count").textContent = `Question ${number} of ${state.questionOrder.length}`;
     $("#progress-percent").textContent = `${percent}%`;
     $("#progress-fill").style.width = `${percent}%`;
     $(".progress-track").setAttribute("aria-valuenow", String(number));
@@ -86,12 +119,12 @@
     const button = $("[data-action='next']");
     button.disabled = state.answers[state.current] === null;
     button.textContent =
-      state.current === data.questions.length - 1 ? "Meet my Ollie →" : "Next question →";
+      state.current === state.questionOrder.length - 1 ? "Meet my Ollie →" : "Next question →";
   }
 
   function nextQuestion() {
     if (state.answers[state.current] === null) return;
-    if (state.current < data.questions.length - 1) {
+    if (state.current < state.questionOrder.length - 1) {
       state.current += 1;
       renderQuestion();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -109,7 +142,7 @@
 
   function calculateScores() {
     state.scores = { chat: 0, study: 0, plan: 0 };
-    data.questions.forEach((question, index) => {
+    state.questionOrder.forEach((question, index) => {
       state.scores[question.dimension] += state.answers[index];
     });
     state.pendingTies = Object.keys(state.scores).filter(
