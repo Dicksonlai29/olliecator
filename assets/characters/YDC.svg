@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title">
+  <title id="title">YDC character placeholder</title>
+  <circle cx="512" cy="512" r="470" fill="#fff0ed"/>
+  <circle cx="512" cy="440" r="250" fill="#ef6a5b"/>
+  <circle cx="410" cy="405" r="28" fill="#062857"/><circle cx="614" cy="405" r="28" fill="#062857"/>
+  <ellipse cx="512" cy="505" rx="70" ry="52" fill="#062857"/>
+  <path d="M420 575 Q512 650 604 575" fill="none" stroke="#062857" stroke-width="28" stroke-linecap="round"/>
+  <rect x="280" y="735" width="464" height="145" rx="72" fill="#062857"/>
+  <text x="512" y="830" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="80" font-weight="700">YDC</text>
+</svg>
